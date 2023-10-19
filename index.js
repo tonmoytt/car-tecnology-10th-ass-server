@@ -51,6 +51,15 @@ async function run() {
             const result = await database.insertOne(data);
             res.send(result)
         })
+        
+        app.delete('/user/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) };
+            const result = await database.deleteOne(query);
+            res.send(result)
+        })
+
+
 
 
 
