@@ -44,6 +44,28 @@ async function run() {
             const result = await database.findOne(query);
             res.send(result)
         })
+        // Update//
+        app.put('/user/:id', async (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: new ObjectId(id) }
+            const options = { upsert: true };
+            const UPdateid = req.body;
+            const UpdateUser = {
+                $set: {
+                    image: UPdateid.image,
+                    name: UPdateid.name,
+                    brandnm: UPdateid.brandnm,
+                    category: UPdateid.category,
+                    Price: UPdateid.Price,
+                    Description: UPdateid.Description,
+                    rating: UPdateid.rating
+                },
+            };
+            const result = await database.updateOne(filter, UpdateUser, options);
+            res.send(result)
+        })
+
+
 
         app.post('/user', async (req, res) => {
             const data = req.body;
@@ -51,7 +73,7 @@ async function run() {
             const result = await database.insertOne(data);
             res.send(result)
         })
-        
+
         app.delete('/user/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: new ObjectId(id) };
